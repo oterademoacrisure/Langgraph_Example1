@@ -243,7 +243,41 @@ flowchart LR
     N3 --> S
     N4 --> S
 ```
-<img width="482" height="249" alt="image" src="https://github.com/user-attachments/assets/1501a30e-a17b-40d5-9b93-52958f6c3f95" />
+
+
+
+```mermaid
+flowchart LR
+    participant U as User
+    participant M as main.py
+    participant G as StateGraph
+    participant F as flight_agent
+    participant H as hotel_agent
+    participant I as itinerary_agent
+    participant R as final_agent
+
+    U->>M: Enter travel request
+    M->>G: app.invoke(user_query)
+    G->>F: START → flight_agent
+    F->>F: search_flights(query)
+    F-->>G: flight_results
+
+    G->>H: hotel_agent
+    H->>H: tavily_search(query)
+    H-->>G: hotel_results
+
+    G->>I: itinerary_agent
+    I->>I: LLM (ChatGroq) → generate itinerary
+    I-->>G: itinerary
+
+    G->>R: final_agent
+    R->>R: LLM (ChatGroq) → final response
+    R-->>G: final travel response
+
+    G-->>M: compiled result
+    M-->>U: Display FINAL RESPONSE
+
+
 
 ## Node Responsibilities
 
