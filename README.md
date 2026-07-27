@@ -43,9 +43,9 @@ Now activate the environment:
 		langgraph_env3\Scripts\activate
 
 
-#### YouTube Tuturial (Hindi) - https://youtu.be/ctHby5vhDqg
+#### YouTube Tutorial (Hindi) - https://youtu.be/ctHby5vhDqg
 
-#### YouTube Tuturial (English) -  https://youtu.be/_5XF5CCnbDk
+#### YouTube Tutorial (English) - https://youtu.be/_5XF5CCnbDk
 
 ---
 
@@ -76,8 +76,9 @@ You will need them later while creating the database connection string.
 
 Open PostgreSQL and run:
 
+```sql
 CREATE DATABASE langgraph_memory_demo;
-
+```
 
 ---
 
@@ -87,14 +88,12 @@ Create a `.env` file inside the project folder.
 
 Add the following keys:
 
+```env
 GROQ_API_KEY=your_groq_api_key
-
 TAVILY_API_KEY=your_tavily_api_key
-
 AVIATIONSTACK_API_KEY=your_aviationstack_api_key
-
 DATABASE_URL=postgresql://postgres:postgres@localhost:5433/langgraph_memory_demo
-
+```
 
 ---
 
@@ -122,8 +121,9 @@ https://aviationstack.com
 
 #### Run Multi-Agent System in Terminal
 
-		python main.py
-
+```bash
+python main.py
+```
 
 This will test the multi-agent system through the terminal.
 
@@ -131,9 +131,9 @@ This will test the multi-agent system through the terminal.
 
 #### Run Streamlit Web App
 
-
-		streamlit run frontend.py
-
+```bash
+streamlit run frontend.py
+```
 
 This will launch the Multi-Agent AI web application.
 
@@ -141,7 +141,9 @@ This will launch the Multi-Agent AI web application.
 
 #### Example Prompt
 
+```text
 Plan a complete 7 days Japan trip including flights, hotels and sightseeing under 2 lakhs.
+```
 
 
 ---
@@ -155,6 +157,8 @@ Plan a complete 7 days Japan trip including flights, hotels and sightseeing unde
 5. PostgreSQL stores conversation memory
 
 # Architecture Diagram
+
+```mermaid
 flowchart TD
     U[User] --> UI[Streamlit Web UI<br/>frontend.py]
     U --> CLI[Terminal CLI<br/>main.py]
@@ -196,6 +200,7 @@ flowchart TD
     ITIN --> FINA
     FINAL --> UI
     FINAL --> CLI
+```
 
 ## Node Responsibilities
 
