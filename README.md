@@ -247,8 +247,10 @@ flowchart LR
 
 
 
+## System Overview
+
 ```mermaid
-flowchart LR
+flowchart TD
     participant U as User
     participant M as main.py
     participant G as StateGraph
@@ -323,6 +325,8 @@ The graph wiring in [main.py](main.py) is:
 - itinerary_agent → final_agent
 - final_agent → END
 ```
+
+
 This means the workflow runs in a strict pipeline. Each node depends on the state produced by the previous node.
 
 ## How Agents Communicate
