@@ -155,10 +155,6 @@ Plan a complete 7 days Japan trip including flights, hotels and sightseeing unde
 5. PostgreSQL stores conversation memory
 
 # Architecture Diagram
-
-## System Overview
-
-```mermaid
 flowchart TD
     U[User] --> UI[Streamlit Web UI<br/>frontend.py]
     U --> CLI[Terminal CLI<br/>main.py]
@@ -179,7 +175,7 @@ flowchart TD
     IA --> LLM[Groq LLM<br/>Llama 3.3 70B]
     FINA --> LLM
 
-    FLT --> AV[ AviationStack API ]
+    FLT --> AV[AviationStack API]
     HOTEL --> TV[Tavily Search API]
     LLM --> GROQ[Groq API]
 
@@ -200,87 +196,6 @@ flowchart TD
     ITIN --> FINA
     FINAL --> UI
     FINAL --> CLI
-```
-
-## Component Responsibilities
-
-- User: submits a travel request through the web UI or terminal.
-- Streamlit UI: provides the interactive chat/web experience.
-- LangGraph App: orchestrates the multi-agent workflow.
-- Agents:
-  - Flight Agent: collects flight information.
-  - Hotel Agent: gathers hotel recommendations.
-  - Itinerary Agent: builds the travel plan.
-  - Final Response Agent: composes the final answer.
-- Tools:
-  - Flight Tool: calls the AviationStack API.
-  - Tavily Tool: performs web search for hotels and travel info.
-- LLM Layer: uses Groq with Llama 3.3 to generate intelligent travel planning responses.
-- Memory Layer: stores conversation/checkpoint state in PostgreSQL.
-
-## Request Flow
-
-1. The user enters a travel prompt.
-2. The app starts the LangGraph workflow.
-3. The Flight Agent and Hotel Agent gather external data.
-4. The Itinerary Agent combines results and generates a trip plan.
-5. The Final Agent creates the final polished response.
-6. The result is shown to the user and persisted in PostgreSQL.
-
-
-This workflow is implemented using LangGraph in [main.py](main.py). The graph is built as a StateGraph, where each node is a Python function and each edge describes the next execution step.
-
-```mermaid
-flowchart LR
-    START([START]) --> N1[flight_agent]
-    N1 --> N2[hotel_agent]
-    N2 --> N3[itinerary_agent]
-    N3 --> N4[final_agent]
-    N4 --> END([END])
-
-    N1 --> S[(TravelState)]
-    N2 --> S
-    N3 --> S
-    N4 --> S
-```
-
-
-
-
-## System Overview
-
-```mermaid
-flowchart TD
-    participant U as User
-    participant M as main.py
-    participant G as StateGraph
-    participant F as flight_agent
-    participant H as hotel_agent
-    participant I as itinerary_agent
-    participant R as final_agent
-
-    U->>M: Enter travel request
-    M->>G: app.invoke(user_query)
-    G->>F: START → flight_agent
-    F->>F: search_flights(query)
-    F-->>G: flight_results
-
-    G->>H: hotel_agent
-    H->>H: tavily_search(query)
-    H-->>G: hotel_results
-
-    G->>I: itinerary_agent
-    I->>I: LLM (ChatGroq) → generate itinerary
-    I-->>G: itinerary
-
-    G->>R: final_agent
-    R->>R: LLM (ChatGroq) → final response
-    R-->>G: final travel response
-
-    G-->>M: compiled result
-    M-->>U: Display FINAL RESPONSE
-
-
 
 ## Node Responsibilities
 
