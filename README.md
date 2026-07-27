@@ -243,6 +243,7 @@ flowchart LR
     N3 --> S
     N4 --> S
 ```
+<img width="482" height="249" alt="image" src="https://github.com/user-attachments/assets/1501a30e-a17b-40d5-9b93-52958f6c3f95" />
 
 ## Node Responsibilities
 
