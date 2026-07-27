@@ -1,162 +1,240 @@
-# AI Travel Planning System using LangGraph
+# Build a Multi-Agent Travel Planning System using LangGraph + MCP | Supervisor Agent + Guardrails + Human-in-the-Loop
 
-This project is a Real-World Multi-Agent AI System built using LangGraph.
 
-The system uses 4 AI agents that work together to plan a complete trip automatically.
+This project extends the Multi-Agent Travel Planning System built in Part 1 and Part 2 by integrating Supervisor Agent + Guardrails + Human-in-the-Loop
 
-## Features
+## Part 1 of This Project
 
-- ✈️ Flight Search Agent
-- 🏨 Hotel Search Agent
-- 🗓️ Itinerary Planning Agent
-- 🤖 Final Response Agent
-- 🧠 Memory using PostgreSQL
-- 🌐 Real-time API Integration
-- 💻 Streamlit Web Interface
+**GitHub Repository:**  
+https://github.com/codewithaarohi/AI-Travel-Planning-System-using-LangGraph
+
+**Video Tutorial:**  
+Build a Real-World Multi-Agent AI System using LangGraph | Multi-Agent AI + Memory + APIs  
+https://youtu.be/ctHby5vhDqg
+
+
+
+
+## Part 2 of This Project
+
+**GitHub Repository:**  
+https://github.com/codewithaarohi/AI-Travel-Planning-App-using-LangGraph-and-MCP
+
+**Video Tutorial:**  
+Build a Real-World Multi-Agent AI System using LangGraph | Multi-Agent AI + Memory + MCP  
+https://youtu.be/DjMX7o2EeV0
 
 ---
 
-# Tech Stack
+# Requirements
 
-- LangGraph
-- LangChain
-- Groq
-- Llama 3.3 70B
-- PostgreSQL
-- Streamlit
-- Tavily API
-- AviationStack API
+## APIs
+
+- Groq API: https://console.groq.com
+- Tavily API: https://www.tavily.com/
+- AviationStack API: https://aviationstack.com/
+- OpenWeatherMap API: https://openweathermap.org/
+
+## Tools
+
+- PostgreSQL: https://www.postgresql.org/download/
+- Tavily MCP Server: https://docs.tavily.com/documentation/mcp
 
 ---
 
 # Step 1: Create Python Environment
 
-Open the terminal inside the project folder and run:
 
-		python -m venv langgraph_env3
-
-
-Now activate the environment:
-
-#### Windows
-
-		langgraph_env3\Scripts\activate
+    python -m venv langgraph_env3
 
 
-#### YouTube Tutorial (Hindi) - https://youtu.be/ctHby5vhDqg
+Activate:
 
-#### YouTube Tutorial (English) - https://youtu.be/_5XF5CCnbDk
+
+    langgraph_env3\Scripts\activate
+
 
 ---
 
 # Step 2: Install Dependencies
 
-Run the following command:
 
-		pip install langgraph langchain langchain-openai langchain-groq langchain-community langchain-tavily psycopg[binary] psycopg_pool python-dotenv tavily-python requests streamlit
+    pip install langgraph langchain langchain-openai langchain-groq langchain-community langchain-tavily psycopg[binary] psycopg_pool python-dotenv tavily-python requests streamlit
 
-		pip install -U "psycopg[binary,pool]"  langgraph-checkpoint-postgres
+
+
+    pip install -U "psycopg[binary,pool]" langgraph-checkpoint-postgres
+
 
 ---
 
 # Step 3: Install PostgreSQL
 
-Download and install PostgreSQL: https://www.postgresql.org/download/
+Download PostgreSQL:
 
-⚠️ Important:
-While installing PostgreSQL, remember:
-- PostgreSQL Password
-- Port Number
+https://www.postgresql.org/download/
 
-You will need them later while creating the database connection string.
+**Important:** Note your PostgreSQL password and port number during installation.
 
 ---
 
 # Step 4: Create Database
 
-Open PostgreSQL and run:
 
-```sql
-CREATE DATABASE langgraph_memory_demo;
-```
+    CREATE DATABASE langgraph_memory_demo;
+
 
 ---
 
-# Step 5: Setup `.env` File
+# Step 5: Setup .env File
 
-Create a `.env` file inside the project folder.
+Create a `.env` file:
 
-Add the following keys:
+    GROQ_API_KEY=your_groq_api_key
 
-```env
-GROQ_API_KEY=your_groq_api_key
-TAVILY_API_KEY=your_tavily_api_key
-AVIATIONSTACK_API_KEY=your_aviationstack_api_key
-DATABASE_URL=postgresql://postgres:postgres@localhost:5433/langgraph_memory_demo
-```
+    TAVILY_API_KEY=your_tavily_api_key
+
+    AVIATIONSTACK_API_KEY=your_aviationstack_api_key
+
+    DATABASE_URL=postgresql://postgres:postgres@localhost:5433/langgraph_memory_demo
+
 
 ---
 
 # Step 6: Get API Keys
 
-## Get Groq API Key
-
-https://console.groq.com
-
----
-
-## Get Tavily API Key
-
-https://tavily.com
-  
----
-
-## Get AviationStack API Key
-
-https://aviationstack.com
+- Groq: https://console.groq.com
+- Tavily: https://tavily.com
+- AviationStack: https://aviationstack.com
+- OpenWeatherMap: https://openweathermap.org/
 
 ---
 
-# Step 7: Run the Application
+# Setup AviationStack MCP Server (Local MCP Server)
 
-#### Run Multi-Agent System in Terminal
+Repository:
 
-```bash
-python main.py
-```
+https://github.com/Pradumnasaraf/aviationstack-mcp
 
-This will test the multi-agent system through the terminal.
+Open PowerShell:
+
+    E:
+
+    cd E:\Multi_agent_system_with_MCP
+
+
+Clone repository:
+
+
+    git clone https://github.com/Pradumnasaraf/aviationstack-mcp.git
+
+    cd aviationstack-mcp
+
+
+## Install UV
+
+Check:
+
+    uv --version
+
+
+Install:
+
+    pip install uv
+
+
+If installation fails:
+
+    powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+
+
+## Create .env File
+
+    AVIATION_STACK_API_KEY=your_api_key_here
+
+
+## Install Dependencies
+
+    uv sync
+
+
+This will:
+
+- Create `.venv`
+- Install dependencies
+- Install AviationStack MCP package
+
+## Activate Environment
+
+    .venv\Scripts\activate
+
+
+## Start MCP Server
+
+    uv run -m aviationstack_mcp mcp run
+
+
+or
+
+
+    python -m aviationstack_mcp mcp run
+
+
+The server will remain running and wait for MCP requests.
+
+## Stop Server
+
+    CTRL + C
+
 
 ---
 
-#### Run Streamlit Web App
+# Setup Weather MCP Server
 
-```bash
-streamlit run frontend.py
-```
+Get API key:
 
-This will launch the Multi-Agent AI web application.
+https://openweathermap.org/
 
----
+Add the API key to your `.env` file.
 
-#### Example Prompt
+Install dependencies:
 
-```text
-Plan a complete 7 days Japan trip including flights, hotels and sightseeing under 2 lakhs.
-```
+    pip install mcp requests
 
 
 ---
 
-# Project Workflow
+# Run the Application
 
-1. Flight Agent searches flights
-2. Hotel Agent searches hotels
-3. Itinerary Agent creates travel plan
-4. Final Agent combines everything together
-5. PostgreSQL stores conversation memory
+## Streamlit Web App
+Run:
 
+    streamlit run frontend.py
+
+
+---
+
+# Example Prompt
+
+    Plan a complete 7 days Japan trip including flights, hotels and sightseeing under 2 lakhs.
+
+
+---
+
+# Features
+
+- Multi-Agent Architecture using LangGraph
+- PostgreSQL Memory
+- Tavily Search Integration
+- AviationStack MCP Integration
+- Weather MCP Integration
+- Streamlit Web App
+- Real-Time Travel Planning
+- Human in the loop
+- Guardrails
 # Architecture Diagram
+
+## System Overview
 
 ```mermaid
 flowchart TD
@@ -202,96 +280,36 @@ flowchart TD
     FINAL --> CLI
 ```
 
-## Node Responsibilities
+## Request Flow
 
-### 1. flight_agent
-- Input: state["user_query"]
-- Action: calls the flight tool through search_flights
-- Output updates:
-  - flight_results
-  - messages.append(AIMessage(...))
-  - llm_calls + 1
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant M as main.py
+    participant G as StateGraph
+    participant F as flight_agent
+    participant H as hotel_agent
+    participant I as itinerary_agent
+    participant R as final_agent
 
-### 2. hotel_agent
-- Input: state["user_query"]
-- Action: calls tavily_search with a hotel-focused query
-- Output updates:
-  - hotel_results
-  - messages.append(AIMessage(...))
-  - llm_calls + 1
+    U->>M: Enter travel request
+    M->>G: app.invoke(user_query)
+    G->>F: START → flight_agent
+    F->>F: search_flights(query)
+    F-->>G: flight_results
 
-### 3. itinerary_agent
-- Input: state["user_query"], state["flight_results"], state["hotel_results"]
-- Action: builds a travel itinerary prompt and calls the Groq LLM
-- Output updates:
-  - itinerary
-  - messages.append(response)
-  - llm_calls + 1
+    G->>H: hotel_agent
+    H->>H: tavily_search(query)
+    H-->>G: hotel_results
 
-### 4. final_agent
-- Input: state["flight_results"], state["hotel_results"], state["itinerary"]
-- Action: synthesizes the final travel response using the LLM
-- Output updates:
-  - messages.append(response)
-  - llm_calls + 1
+    G->>I: itinerary_agent
+    I->>I: LLM (ChatGroq) → generate itinerary
+    I-->>G: itinerary
 
-## Edge Connection Logic
+    G->>R: final_agent
+    R->>R: LLM (ChatGroq) → final response
+    R-->>G: final travel response
 
-The graph wiring in [main.py](main.py) is:
-
-- START → flight_agent
-- flight_agent → hotel_agent
-- hotel_agent → itinerary_agent
-- itinerary_agent → final_agent
-- final_agent → END
+    G-->>M: compiled result
+    M-->>U: Display FINAL RESPONSE
 ```
-
-
-This means the workflow runs in a strict pipeline. Each node depends on the state produced by the previous node.
-
-## How Agents Communicate
-
-Agents do not call each other directly. Instead, they communicate through the shared state object called TravelState.
-
-The communication pattern is:
-
-1. A node reads from the current state.
-2. A node updates one or more state fields.
-3. The graph passes the updated state to the next node.
-4. The next node uses those values as input.
-
-### Example
-- flight_agent writes flight_results
-- hotel_agent reads user_query and writes hotel_results
-- itinerary_agent reads both results and writes itinerary
-- final_agent reads all of them and produces the final answer
-
-## Technical State Structure
-
-The shared state contains:
-
-- messages: list of conversation messages
-- user_query: original travel request
-- flight_results: flight information from the flight tool
-- hotel_results: hotel information from Tavily
-- itinerary: generated itinerary text
-- llm_calls: count of LLM executions
-
-## External Tool Integration
-
-- [tools/flight_tool.py](tools/flight_tool.py): calls the AviationStack API
-- [tools/tavily_tool.py](tools/tavily_tool.py): calls the Tavily API
-- Groq LLM: generates the itinerary and final response
-- PostgreSQL checkpointer: stores the workflow state for persistence
-
-## End-to-End Execution Flow
-
-1. The user submits a travel prompt.
-2. The graph starts at START.
-3. flight_agent gathers flight data.
-4. hotel_agent gathers hotel data.
-5. itinerary_agent combines both sources and generates a plan.
-6. final_agent produces the final polished response.
-7. The workflow ends at END.
-
-
